@@ -2,13 +2,20 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel, QFileDialog, QMessageBox
 from PyQt5.QtGui import QIcon
 from recorder import AudioRecorder
-from utils import get_default_audio_file_path
+from utils import get_default_audio_file_path, resource_path
 
 class SoundRecorderApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("RGB.DEV | Sound Recorder")
-        self.setWindowIcon(QIcon("assets/icon.ico"))
+        self.setWindowTitle("RGB.DEV | Primitive Sound Recorder")
+        app_icon = QIcon(resource_path("assets/icon.ico"))
+        self.setWindowIcon(app_icon)
+
+        if sys.platform == "win32":
+            import ctypes
+            myappid = 'rgb.dev.primitivesoundrecorder.app'
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+        
         self.resize(400, 200)
 
         # Initialize components
